@@ -3,10 +3,8 @@ from bs4 import BeautifulSoup
 import os
 import requests
 import sys
-from gevent.queue import ItemWaiter
-from pylint.extensions.check_elif import ElseifUsedChecker
 import code
-from _pytest._code.code import Code
+#from _pytest._code.code import Code
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
@@ -63,7 +61,7 @@ def get_sise_daily(code):
         thisday=datetime.datetime.now().strftime("%Y%m%d")
         
         #######test##########
-        thisday='20180309' #This is for test 
+        thisday='20180314' #This is for test 
         #####################
         thistime=thisday+"180000"
         url="http://finance.naver.com/item/sise_time.nhn?code=%s&thistime=%s&page=%s"%(code,thistime,page)
@@ -86,12 +84,13 @@ def get_sise_daily(code):
         if len(data)==70 and page!='40':
             print('Parsing sucess')
         else:
-            if len(data)==42 and page=='40':
+            if (len(data)!=0 or len(data)==42 or len(data)==35) and (page=='40' or page=='39'):
                 print('Parsing sucess')
+            
             else:
                 print("ERROR: Parsing failed")
-                sys.exit()
-        
+                #sys.exit()
+                break
         min_data=[]
         min_data_tmp=[]
             
@@ -179,10 +178,23 @@ def kosdak_code():
     f=open("kosdak.txt",'w')
     f.writelines(["%s\n"%item for item in code])
     return code
-            
+
+def data_get():
+    kospi=kospi_code()
+    kosdak=kosdak_code()
+    for code in kospi:
+        print("data_get:)",code)
+        get_sise_daily(code)
+
+    for code in kosdak:
+        print("data_get:)",code)
+        get_sise_daily(code)
+    
+
 if __name__ == '__main__':
     code = '215600'
     #get_sise_daily(code)
     #read_db(code)
     #kospi_code()
-    kosdak_code()
+    #kosdak_code()
+    data_get()
