@@ -89,8 +89,8 @@ def get_sise_daily(code):
             
             else:
                 print("ERROR: Parsing failed")
-                sys.exit()
-        
+                #sys.exit()
+                break
         min_data=[]
         min_data_tmp=[]
             
