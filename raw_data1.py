@@ -84,13 +84,13 @@ def get_sise_daily(code):
         if len(data)==70 and page!='40':
             print('Parsing sucess')
         else:
-            if (len(data)!=0 or len(data)==42 or len(data)==35) and (page=='40' or page=='39'):
+            if (len(data)!=0 or len(data)==42 or len(data)==35) and (page=='40':
                 print('Parsing sucess')
             
             else:
                 print("ERROR: Parsing failed")
-                #sys.exit()
-                break
+                sys.exit()
+        
         min_data=[]
         min_data_tmp=[]
             
@@ -186,7 +186,7 @@ def data_get():
         print("data_get:)",code)
         get_sise_daily(code)
 
-    for code in kosdak:
+    for code in kosdak():
         print("data_get:)",code)
         get_sise_daily(code)
     
